@@ -13,9 +13,6 @@ function App() {
     const fetchData = async () => {
       try {
         const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/product`);
-        if (!res.ok) {
-          throw new Error('Failed to fetch product data');
-        }
         const resData = await res.json();
         dispatch(setDataProduct(resData));
       } catch (error) {
