@@ -1,11 +1,10 @@
 import "./App.css";
 import Header from "./components/Header";
 import { Outlet } from "react-router-dom";
-import { Toaster } from "react-hot-toast"; // Removed unnecessary import of toast
+import toast, { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
 import { setDataProduct } from "./redux/productSlice";
-import { useDispatch } from "react-redux"; // Removed unnecessary import of useSelector
-// Removed unnecessary import of useSelector as we are not using it directly in this file
+import { useDispatch } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
@@ -22,11 +21,12 @@ function App() {
       } catch (error) {
         console.error('Error fetching product data:', error.message);
         // You can handle errors here, e.g., show a toast notification
+        toast.error('Failed to fetch product data. Please try again later.');
       }
     };
 
     fetchData();
-  }, [dispatch]); // Added dispatch as a dependency for useEffect
+  }, [dispatch]);
 
   return (
     <>
