@@ -1,32 +1,34 @@
+// App.js
+
+import React, { useEffect } from "react"; // Import React and useEffect
 import "./App.css";
-import Header from "./components/Header";
+import Header from "./components/Header"; // Corrected import path
 import { Outlet } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
-import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { setDataProduct } from "./redux/productSlice";
-import { useDispatch } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
+  const productData = useSelector((state) => state.product);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProductData = async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/product`);
+        const res = await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/product`); // Corrected environment variable name
         if (!res.ok) {
-          throw new Error('Failed to fetch product data');
+          throw new Error("Failed to fetch product data");
         }
         const resData = await res.json();
         dispatch(setDataProduct(resData));
       } catch (error) {
-        console.error('Error fetching product data:', error.message);
-        // You can handle errors here, e.g., show a toast notification
-        toast.error('Failed to fetch product data. Please try again later.');
+        console.error("Error fetching product data:", error.message);
+        toast.error("Failed to fetch product data"); // Notify user of the error
       }
     };
 
-    fetchData();
-  }, [dispatch]);
+    fetchProductData(); // Call the fetch function
+  }, [dispatch]); // Include dispatch in the dependency array
 
   return (
     <>
